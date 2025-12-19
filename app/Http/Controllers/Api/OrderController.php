@@ -8,7 +8,6 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
-    // Create order from cart (Checkout)
     public function checkout(Request $request)
     {
         $user = $request->user();
@@ -49,8 +48,7 @@ class OrderController extends Controller
         ]);
     }
 
-    // List all user orders
-    public function history(Request $request)
+    public function index(Request $request)
     {
         $orders = $request->user()->orders()->with('items.product')->get();
 
@@ -60,7 +58,6 @@ class OrderController extends Controller
         ]);
     }
 
-    // Show details of a single order
     public function show(Request $request, $id)
     {
         $order = $request->user()->orders()->with('items.product')->find($id);

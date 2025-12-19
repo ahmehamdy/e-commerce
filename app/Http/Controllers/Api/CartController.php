@@ -9,7 +9,7 @@ use App\Models\Product;
 
 class CartController extends Controller
 {
-    public function view(Request $request)
+    public function show(Request $request)
     {
         $cart = $request->user()->cart()->with('items.product')->first();
 
@@ -19,7 +19,7 @@ class CartController extends Controller
         ]);
     }
 
-    public function add(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
@@ -40,7 +40,7 @@ class CartController extends Controller
         ]);
     }
 
-    public function remove(Request $request, $id)
+    public function destroy(Request $request, $id)
     {
         $cart = $request->user()->cart;
         $item = $cart->items()->where('id', $id)->first();
