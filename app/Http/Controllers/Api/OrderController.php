@@ -8,7 +8,17 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
-    public function checkout(Request $request)
+    public function index(Request $request)
+    {
+        $orders = $request->user()->orders()->with('items.product')->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $orders
+        ]);
+    }
+
+    public function store(Request $request)
     {
         $user = $request->user();
         $cart = $user->cart()->with('items.product')->first();
@@ -45,16 +55,6 @@ class OrderController extends Controller
             'status' => true,
             'message' => 'Order created successfully',
             'data' => $order->load('items.product')
-        ]);
-    }
-
-    public function index(Request $request)
-    {
-        $orders = $request->user()->orders()->with('items.product')->get();
-
-        return response()->json([
-            'status' => true,
-            'data' => $orders
         ]);
     }
 
