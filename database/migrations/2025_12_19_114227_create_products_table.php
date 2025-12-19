@@ -17,7 +17,7 @@ return new class extends Migration
             $table->json('description');
             $table->decimal('price',10,2);
             $table->integer('quantity');
-            $table->string('image');
+            $table->string('image')->default('products/default.png');
             $table->timestamps();
         });
     }
